@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 
 interface Props{
-    children: React.ReactDOM;
+    children: React.ReactNode;
 }
 
 const Layout = ({children}: Props) => {

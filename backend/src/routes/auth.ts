@@ -4,10 +4,14 @@ import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { verify } from "crypto";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/login", [
+router.post(
+    "/login", 
+    [
      check("email", "Email is required").isEmail, 
      check("password", "Password with 6 or more characters is required").isLength({ min: 6 }), 
     ], async (req: Request, res: Response) => {
@@ -51,5 +55,16 @@ router.post("/login", [
         }
     }
 )
+
+ router.get("/validate-token", verifyToken, (req: Request, res: Response)=>{
+    res.status(200).send({userId: req.userId})
+ });
+
+ router.post("/logout", (req: Request, res: Response) => {
+    res.cookie("auth_token", "", {
+        expires: new Date(0),
+    });
+    res.send();
+ })
 
 export default router;
