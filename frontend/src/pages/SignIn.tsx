@@ -16,18 +16,19 @@ const SignIn = () => {
 
   const location = useLocation();
 
-  const {register, formState: { errors }, handleSubmit,} = useForm<SignInFormData>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<SignInFormData>();
 
   const mutation = useMutation(apiClient.signIn, {
     onSuccess: async () => {
-        //1. show the toast message
       showToast({ message: "Sign in Successful!", type: "SUCCESS" });
       await queryClient.invalidateQueries("validateToken");
-        //2. navigate to the home page
       navigate(location.state?.from?.pathname || "/");
     },
     onError: (error: Error) => {
-        // show the toast
       showToast({ message: error.message, type: "ERROR" });
     },
   });
