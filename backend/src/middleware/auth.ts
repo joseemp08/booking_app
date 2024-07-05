@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { decode } from "punycode";
 
 declare  global{
     namespace Express {
